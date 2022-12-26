@@ -11,7 +11,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
 
     List<Personne> findByNom(String nom);
 
-    List<Personne> findByNomAndPrenom(String nom, String prenom);
+    public List<Personne> findByNomAndPrenom(String nom, String prenom);
 
     @Query(value = "SELECT * FROM personne WHERE lastname= :nom AND firstname= :prenom ", nativeQuery = true)
     List<Personne>  findNomPrenom(String nom, String prenom);
