@@ -6,7 +6,7 @@ pipeline{
    stages{
       stage("source"){
           steps{
-             git branch: 'master' ,url:'https://github.com/tallahmad047/demo-docker-sonar-jenkins.git'
+             git branch: 'dev1' ,url:'https://github.com/tallahmad047/projet-sir-2022-main.git'
         }
       }
        stage ('Build') {
