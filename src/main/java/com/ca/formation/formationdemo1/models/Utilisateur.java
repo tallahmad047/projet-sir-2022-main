@@ -1,5 +1,6 @@
 package com.ca.formation.formationdemo1.models;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -43,6 +44,7 @@ public class Utilisateur implements UserDetails, Serializable {
     }
 
     public boolean isEnabled() {
+
         return enabled;
     }
 
@@ -56,17 +58,17 @@ public class Utilisateur implements UserDetails, Serializable {
 
     @Override
     public boolean isAccountNonExpired() {
-        return enabled;
+        return isEnabled();
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return enabled;
+        return isEnabled();
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return enabled;
+        return isEnabled();
     }
 
     public void setUsername(String username) {
@@ -95,7 +97,7 @@ public class Utilisateur implements UserDetails, Serializable {
     }
 
     public Set<Role> getAuthoritie() {
-        return authoritie;
+        return (Set<Role>) getAuthorities();
     }
 
     public void setAuthoritie(Set<Role> authoritie) {

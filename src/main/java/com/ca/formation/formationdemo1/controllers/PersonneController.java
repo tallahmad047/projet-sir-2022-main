@@ -24,6 +24,7 @@ public class PersonneController {
 
     @GetMapping("/nouveau")
     public String nouveauPersonne(Personne personne){
+
         return "nouveau";
     }
 

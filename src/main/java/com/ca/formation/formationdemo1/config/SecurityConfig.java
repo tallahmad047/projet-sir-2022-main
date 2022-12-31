@@ -2,6 +2,10 @@ package com.ca.formation.formationdemo1.config;
 
 import com.ca.formation.formationdemo1.config.jwtConfig.JwtFilter;
 import com.ca.formation.formationdemo1.repositories.UtilisateurRepository;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
@@ -31,6 +35,8 @@ import static java.lang.String.format;
 )
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
+
+    Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
     private final UtilisateurRepository utilisateurRepository;
     private final JwtFilter jwtFilter;
 
@@ -75,7 +81,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                         .authenticationEntryPoint(
                                 ((request, response, authException) -> {
-                                    System.out.println("Demande pas autoriser - "+authException.getMessage());
+                                    logger.info("Demande pas autoriser - "+authException.getMessage());
                                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                                 })
                         )
@@ -103,6 +109,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Exposer le bean du authentication manager
     @Bean
+    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }
