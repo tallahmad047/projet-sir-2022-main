@@ -1,6 +1,6 @@
 package com.ca.formation.formationdemo1.config;
 
-import com.ca.formation.formationdemo1.config.jwtConfig.JwtFilter;
+import com.ca.formation.formationdemo1.config.jwtconfig.JwtFilter;
 import com.ca.formation.formationdemo1.repositories.UtilisateurRepository;
 
 
