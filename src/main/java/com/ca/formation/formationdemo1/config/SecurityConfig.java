@@ -37,7 +37,7 @@ import static java.lang.String.format;
  * @deprecated Deprecated since version 4.2 and scheduled for removal in a future release. Use a different security configuration instead.
  */
 
-@Deprecated(since="4.2", forRemoval=true)
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
