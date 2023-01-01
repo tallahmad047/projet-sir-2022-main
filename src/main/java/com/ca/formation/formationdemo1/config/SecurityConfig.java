@@ -33,6 +33,9 @@ import static java.lang.String.format;
         jsr250Enabled = true,
         prePostEnabled = true
 )
+/**
+ * @deprecated (when, why, etc...)
+ */
 @Deprecated(since="4.2", forRemoval=true)
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
