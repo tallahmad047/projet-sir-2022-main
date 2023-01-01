@@ -81,17 +81,17 @@ public class JwtUtil {
            String mes=String.format("Invalide Signature Jwt - %s",ex.getMessage());
            logger.info(mes);
         } catch (ExpiredJwtException ex){
-            String mes=String.format("Expiration du Jwt - "+ex.getMessage());
-            logger.info(mes);
+            //String mes=String.format("Expiration du Jwt - %s", +ex.getMessage());
+            logger.info("Expiration du Jwt - %s" +ex.getMessage());
         }catch (UnsupportedJwtException ex){
-            String mes=String.format("Token jwt non supporté - "+ex.getMessage());
+            String mes=String.format("Token jwt non supporté -%s "+ex.getMessage());
             logger.info(mes);
         }catch (IllegalArgumentException ex){
-            String mes=String.format("Invalide claims Jwt - "+ex.getMessage());
-            logger.info(mes);
+           // String mes=String.format("Invalide claims Jwt - "+ex.getMessage());
+            logger.info("Invalide claims Jwt - "+ex.getMessage());
         }catch (MalformedJwtException ex){
-            String mes=String.format("Token jwt mal formatter - "+ex.getMessage());
-            logger.info(mes);
+            //String mes=String.format("Token jwt mal formatter - "+ex.getMessage());
+            logger.info("Invalide claims Jwt - "+ex.getMessage());
         }
 
         return false;
