@@ -86,7 +86,7 @@ public class JwtUtil {
         }catch (IllegalArgumentException ex){
             format("Invalide claims Jwt - "+ex.getMessage());
         }catch (MalformedJwtException ex){
-            logger.info("Token jwt mal formatter - "+ex.getMessage());
+            format("Token jwt mal formatter - "+ex.getMessage());
         }
 
         return false;
