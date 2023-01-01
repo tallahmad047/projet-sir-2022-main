@@ -50,7 +50,7 @@ public class ProjetSIRApplication {
 
       List<Personne> personneList = repository.findByNomAndPrenom("Abdel", "Moussa");
 
-      personneList.stream().forEach(System.out::println);
+      personneList.stream().forEach(System.err::println);
 
     });
   }

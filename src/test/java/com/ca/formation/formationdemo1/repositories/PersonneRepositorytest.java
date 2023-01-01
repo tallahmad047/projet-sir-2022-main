@@ -29,7 +29,7 @@ public class PersonneRepositorytest {
   public void ajouterPersonne() {
     Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
     assertNotNull(personne);
-    assertEquals(personne.getNom(), "tonux");
+    assertEquals( "tonux",personne.getNom());
   }
   @Test
  public void findByNom(){
@@ -85,7 +85,7 @@ public class PersonneRepositorytest {
         personne.setId(1L);
         personneRepository.delete(personne);
         assertNotNull(personne);
-        assertEquals(HttpStatus.OK.value(),200);
+        assertEquals(200,HttpStatus.OK.value());
 
     }
 

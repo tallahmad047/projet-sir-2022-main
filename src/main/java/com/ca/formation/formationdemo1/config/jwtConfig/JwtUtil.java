@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 import java.util.Date;
 import java.util.stream.Collectors;
 
+import static java.lang.String.format;
+
 @Component
 public class JwtUtil {
 
@@ -76,15 +78,15 @@ public class JwtUtil {
             Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token);
             return true;
         } catch (SignatureException ex){
-            logger.info("Invalide Signature Jwt - "+ex.getMessage());
+            format("Invalide Signature Jwt - "+ex.getMessage());
         } catch (ExpiredJwtException ex){
-            logger.info("Expiration du Jwt - "+ex.getMessage());
+            format("Expiration du Jwt - "+ex.getMessage());
         }catch (UnsupportedJwtException ex){
-            logger.info("Token jwt non supporté - "+ex.getMessage());
+            format("Token jwt non supporté - "+ex.getMessage());
         }catch (IllegalArgumentException ex){
-            logger.info("Invalide claims Jwt - "+ex.getMessage());
+            format("Invalide claims Jwt - "+ex.getMessage());
         }catch (MalformedJwtException ex){
-            logger.info("Token jwt mal formatter - "+ex.getMessage());
+            format("Token jwt mal formatter - "+ex.getMessage());
         }
 
         return false;
