@@ -11,7 +11,6 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -35,8 +34,8 @@ import static java.lang.String.format;
         prePostEnabled = true
 )
 
-
-public class SecurityConfig  {
+@Deprecated(forRemoval = true)
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
     Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
@@ -55,7 +54,7 @@ public class SecurityConfig  {
         this.jwtFilter = jwtFilter;
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
-
+    @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(username -> utilisateurRepository
@@ -67,7 +66,7 @@ public class SecurityConfig  {
                 ));
     }
 
-
+    @Override
     protected void configure(HttpSecurity http) throws Exception {
 
         // activer les cors et desactiver les CSRF
@@ -111,11 +110,9 @@ public class SecurityConfig  {
     }
 
     // Exposer le bean du authentication manager
-
-
-    // Exposer le bean du authentication manager
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration
-                                                                   authenticationConfiguration) throws Exception {
-        return authenticationConfiguration.getAuthenticationManager();}
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception{
+        return super.authenticationManagerBean();
+    }
 }
