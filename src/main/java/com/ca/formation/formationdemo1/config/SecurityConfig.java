@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -33,12 +34,9 @@ import static java.lang.String.format;
         jsr250Enabled = true,
         prePostEnabled = true
 )
-/**
- * @deprecated Deprecated since version 4.2 and scheduled for removal in a future release. Use a different security configuration instead.
- */
 
 
-public class SecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig  {
 
 
     Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
@@ -57,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
-    @Override
+
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(username -> utilisateurRepository
@@ -69,7 +67,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 ));
     }
 
-    @Override
+
     protected void configure(HttpSecurity http) throws Exception {
 
         // activer les cors et desactiver les CSRF
@@ -113,9 +111,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     // Exposer le bean du authentication manager
+
+
+    // Exposer le bean du authentication manager
     @Bean
-    @Override
-    public AuthenticationManager authenticationManagerBean() throws Exception{
-        return super.authenticationManagerBean();
-    }
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration
+                                                                   authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();}
 }

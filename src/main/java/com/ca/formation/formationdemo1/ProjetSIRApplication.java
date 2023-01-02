@@ -29,6 +29,7 @@ public class ProjetSIRApplication {
   @Autowired
   private Environment env;
 
+
   public static void main(String[] args) {
     SpringApplication.run(ProjetSIRApplication.class, args);
   }
@@ -45,13 +46,9 @@ public class ProjetSIRApplication {
       Personne personne1 = repository.save(new Personne("Lacroix", "Jean", 20));
       repository.save(new Personne("Beau", "Michel", 30));
       repository.save(new Personne("Abdel", "Moussa", 40));
-
       repository.delete(personne1);
-
       List<Personne> personneList = repository.findByNomAndPrenom("Abdel", "Moussa");
-
-      personneList.stream().forEach(System.err::println);
-
+      personneList.stream().forEach((personne) -> {logger.info(String.valueOf(personne));});
     });
   }
 
@@ -61,7 +58,6 @@ public class ProjetSIRApplication {
     templateResolver.setPrefix("templates-new/");
     templateResolver.setSuffix(".html");
     templateResolver.setCheckExistence(true);
-
     return templateResolver;
   }
 
