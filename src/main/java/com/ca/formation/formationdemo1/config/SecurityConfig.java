@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -34,7 +35,8 @@ import static java.lang.String.format;
         prePostEnabled = true
 )
 
-@Deprecated(forRemoval = true)
+@Order(100)
+@Deprecated
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 

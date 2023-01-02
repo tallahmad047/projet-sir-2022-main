@@ -48,7 +48,7 @@ public class ProjetSIRApplication {
       repository.save(new Personne("Abdel", "Moussa", 40));
       repository.delete(personne1);
       List<Personne> personneList = repository.findByNomAndPrenom("Abdel", "Moussa");
-      personneList.stream().forEach((personne) -> {logger.info(String.valueOf(personne));});
+      personneList.stream().forEach(personne-> logger.info(String.valueOf(personne1)));
     });
   }
 
