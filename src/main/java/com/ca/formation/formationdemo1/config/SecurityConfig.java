@@ -4,8 +4,8 @@ import com.ca.formation.formationdemo1.config.jwtconfig.JwtFilter;
 import com.ca.formation.formationdemo1.repositories.UtilisateurRepository;
 
 
-import org.aspectj.bridge.MessageUtil;
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 
@@ -39,11 +39,10 @@ import static java.lang.String.format;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 
-
+    Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     private final UtilisateurRepository utilisateurRepository;
     private final JwtFilter jwtFilter;
-   private  Logger logger;
 
     @Value("${springdoc.api-docs.path}")
     private String apiDocPath;
@@ -86,7 +85,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                         .authenticationEntryPoint(
                                 ((request, response, authException) -> {
-
                                     logger.info("Demande pas autoriser - "+authException.getMessage());
                                     response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                                 })
