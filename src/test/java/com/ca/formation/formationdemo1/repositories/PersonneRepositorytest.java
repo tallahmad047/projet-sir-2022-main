@@ -8,12 +8,11 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
 
-import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
@@ -33,18 +32,14 @@ public class PersonneRepositorytest {
   }
   @Test
  public void findByNom(){
-    Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
-      Personne personne1 =new Personne();
-     // personne.setNom("tall");
+   
 
 
   List < Personne> personneList= personneRepository.findByNom("tonux");
-    //  assertNotNull(personneList);
+    
       assertEquals(1,personneList.size());
       assertEquals("tonux",personneList.get(0).getNom());
-     // assertThat(personneList).isNotEmpty().contains(personne).doesNotcontains(personne1,personne2);
-
-    //assertEquals(personne,personneList);
+    
 
 
 
@@ -52,11 +47,11 @@ public class PersonneRepositorytest {
   }
   @Test
     public void findByNomAndPrenom(){
-      Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
+     
       List < Personne> personneList= personneRepository.findByNomAndPrenom("tonux","samb");
       assertNotNull(personneList);
       assertEquals(1,personneList.size());
-     // assertEquals("tonux",personneList.get(0).getNom());
+   
 
 
     }
@@ -78,7 +73,7 @@ public class PersonneRepositorytest {
         assertNotNull(personUpdated);
         assertEquals("Coundoul", personUpdated.getNom());
     }
-    // TODO : add test delete
+    
     @Test
     public void delete(){
         Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
@@ -91,7 +86,7 @@ public class PersonneRepositorytest {
 
 
 
-    // TODO : add test findById
+    
     @Test
     public void findById()
     {
@@ -101,7 +96,7 @@ public class PersonneRepositorytest {
         assertEquals("tonux",personList.get().getNom());
     }
 
-    // TODO : add test findAll
+   
 
     @Test
     public void findAll()
@@ -111,6 +106,6 @@ public class PersonneRepositorytest {
         assertEquals(2,personList.size());
     }
 
-  // TODO: ajouter un test sur les autres methodes comme delete, findByNom, etc...
+  
 
 }

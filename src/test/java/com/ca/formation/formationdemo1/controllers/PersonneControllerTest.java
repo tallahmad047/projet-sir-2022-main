@@ -30,7 +30,7 @@ public class PersonneControllerTest {
 
   @Autowired
   private MockMvc mockMvc;
-
+  @Autowired
   @MockBean
   PersonneService personneService;
 

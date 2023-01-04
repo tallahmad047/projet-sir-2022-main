@@ -1,5 +1,6 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
+import com.ca.formation.formationdemo1.dto.PersonneDto;
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.models.Role;

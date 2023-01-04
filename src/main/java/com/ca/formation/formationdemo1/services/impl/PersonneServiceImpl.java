@@ -1,20 +1,27 @@
 package com.ca.formation.formationdemo1.services.impl;
 
+import com.ca.formation.formationdemo1.dto.PersonneDto;
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
+import com.ca.formation.formationdemo1.mappers.PersonneMapper;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
 import com.ca.formation.formationdemo1.services.PersonneService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
+
 public class PersonneServiceImpl implements PersonneService {
+    private final PersonneMapper dtoMapper;
 
     private final PersonneRepository personneRepository;
 
-    public PersonneServiceImpl(PersonneRepository personneRepository) {
+    public PersonneServiceImpl(PersonneMapper dtoMapper, PersonneRepository personneRepository) {
+        this.dtoMapper = dtoMapper;
         this.personneRepository = personneRepository;
     }
 
@@ -41,10 +48,12 @@ public class PersonneServiceImpl implements PersonneService {
         return personneRepository.save(personne);
     }
 
-    @Override
-    public Personne addPersonne(Personne personne) {
-        return personneRepository.save(personne);
-    }
+
+        @Override
+        public Personne addPersonne(Personne personne) {
+            return personneRepository.save(personne);
+        }
+
 
     @Override
     public void deletePersonne(Long id) {

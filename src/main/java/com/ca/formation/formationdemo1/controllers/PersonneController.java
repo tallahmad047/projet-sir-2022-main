@@ -1,7 +1,9 @@
 package com.ca.formation.formationdemo1.controllers;
 
+import com.ca.formation.formationdemo1.dto.PersonneDto;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,6 +16,7 @@ public class PersonneController {
 
     public PersonneController(PersonneRepository repository) {
         this.repository = repository;
+
     }
 
     @GetMapping
@@ -23,7 +26,7 @@ public class PersonneController {
     }
 
     @GetMapping("/nouveau")
-    public String nouveauPersonne(Personne personne){
+    public String nouveauPersonne(PersonneDto personne){
 
         return "nouveau";
     }

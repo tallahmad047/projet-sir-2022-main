@@ -35,6 +35,13 @@ public class Utilisateur implements UserDetails, Serializable {
         this.authoritie = authoritie;
     }
 
+    public Utilisateur(String username, String password) {
+
+            this.username = username;
+            this.password = password;
+
+    }
+
     public Long getId() {
         return id;
     }
