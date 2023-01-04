@@ -19,39 +19,39 @@ import static org.junit.Assert.assertNotNull;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @ActiveProfiles("test")
-public class PersonneRepositorytest {
+public class PersonneRepositoryTest {
 
-  @Autowired
-  PersonneRepository personneRepository;
+    @Autowired
+    PersonneRepository personneRepository;
 
-  @Test
-  public void ajouterPersonne() {
-    Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
-    assertNotNull(personne);
-    assertEquals( "tonux",personne.getNom());
-  }
-  @Test
- public void findByNom(){
-   
-
-
-  List < Personne> personneList= personneRepository.findByNom("tonux");
-    
-      assertEquals(1,personneList.size());
-      assertEquals("tonux",personneList.get(0).getNom());
-    
+    @Test
+    public void ajouterPersonne() {
+        Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
+        assertNotNull(personne);
+        assertEquals( "tonux",personne.getNom());
+    }
+    @Test
+    public void findByNom(){
 
 
 
+        List < Personne> personneList= personneRepository.findByNom("tonux");
 
-  }
-  @Test
+        assertEquals(3,personneList.size());
+        assertEquals("tonux",personneList.get(0).getNom());
+
+
+
+
+
+    }
+    @Test
     public void findByNomAndPrenom(){
-     
-      List < Personne> personneList= personneRepository.findByNomAndPrenom("tonux","samb");
-      assertNotNull(personneList);
-      assertEquals(1,personneList.size());
-   
+
+        List < Personne> personneList= personneRepository.findByNomAndPrenom("tonux","samb");
+        assertNotNull(personneList);
+        assertEquals(2,personneList.size());
+
 
 
     }
@@ -61,7 +61,7 @@ public class PersonneRepositorytest {
         assertNotNull(personne);
         assertEquals("tonux", personne.getNom());
     }
-///
+    ///
     @Test
     public void update(){
         //Given
@@ -73,7 +73,7 @@ public class PersonneRepositorytest {
         assertNotNull(personUpdated);
         assertEquals("Coundoul", personUpdated.getNom());
     }
-    
+
     @Test
     public void delete(){
         Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
@@ -86,7 +86,7 @@ public class PersonneRepositorytest {
 
 
 
-    
+
     @Test
     public void findById()
     {
@@ -96,16 +96,16 @@ public class PersonneRepositorytest {
         assertEquals("tonux",personList.get().getNom());
     }
 
-   
+
 
     @Test
     public void findAll()
     {
         List<Personne> personList= (List<Personne>) personneRepository.findAll();
         assertNotNull(personList);
-        assertEquals(2,personList.size());
+        assertEquals(4,personList.size());
     }
 
-  
+
 
 }

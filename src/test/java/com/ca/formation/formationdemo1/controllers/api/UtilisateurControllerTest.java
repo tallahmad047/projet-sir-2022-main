@@ -1,10 +1,15 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
 
+import com.ca.formation.formationdemo1.config.jwtconfig.JwtUtil;
+import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
 
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -12,6 +17,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.*;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
@@ -20,6 +26,9 @@ import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
 
 
 @RunWith(SpringRunner.class)
@@ -28,6 +37,14 @@ import static org.junit.Assert.assertNotNull;
 public class UtilisateurControllerTest {
     @Autowired
     private MockMvc mockMvc;
+    @Mock
+    private UtilisateurService utilisateurService;
+
+    @Mock
+    private JwtUtil jwtUtil;
+
+    @InjectMocks
+    private UtilisateurController utilisateurController;
 
     @MockBean
     UtilisateurService utillisateurService;
@@ -62,5 +79,49 @@ public class UtilisateurControllerTest {
         String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
         tokenRequest = token;
         System.out.println(body);
+    }
+    @Test
+    @DisplayName("Should return a status code of 200 when the user is created")
+   public void registrationWhenUserIsCreatedThenReturnStatusCode200() throws javax.xml.bind.ValidationException {
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setUsername("test");
+        utilisateur.setPassword("test");
+
+        // when(utilisateurService.    registration(any(Utilisateur.class))).thenReturn(utilisateur);
+
+        ResponseEntity<Utilisateur> responseEntity =
+                utilisateurController.registration(utilisateur);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+    }
+
+
+    @Test
+    @DisplayName("Should return 401 when the credentials are incorrect")
+    public  void loginWhenCredentialsAreIncorrectThenReturn401() {
+        Utilisateur utilisateurRequest = new Utilisateur("admin", "admin");
+        when(utilisateurService.login(any(Utilisateur.class)))
+                .thenThrow(new BadCredentialsException("Bad credentials"));
+
+        ResponseEntity<Utilisateur> responseEntity =
+                utilisateurController.login(utilisateurRequest);
+
+        assertEquals(HttpStatus.UNAUTHORIZED, responseEntity.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Should return 200 when the credentials are correct")
+    public  void loginWhenCredentialsAreCorrectThenReturn200() {
+        Utilisateur utilisateur = new Utilisateur("admin", "admin");
+        when(utilisateurService.login(any(Utilisateur.class))).thenReturn(utilisateur);
+        when(jwtUtil.generateAccesToken(any(Utilisateur.class))).thenReturn("token");
+        when(jwtUtil.refreshAccesToken(any(Utilisateur.class))).thenReturn("refresh_token");
+
+
+        ResponseEntity<Utilisateur> responseEntity = utilisateurController.login(utilisateur);
+
+        assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+        assertNotNull(responseEntity.getHeaders().get(HttpHeaders.AUTHORIZATION));
+        assertNotNull(responseEntity.getHeaders().get("refresh_token"));
     }
 }

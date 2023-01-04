@@ -1,6 +1,6 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
-import com.ca.formation.formationdemo1.dto.PersonneDto;
+
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.models.Role;
@@ -67,7 +67,9 @@ public class ApiPersonneController {
     }
 
     @PatchMapping("/{id}")
-    public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id, @RequestBody Personne personneRequest ) throws Exception {
+    public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id,
+                                                   @RequestBody Personne personneRequest )
+            throws ResourceNotFoundException {
 
         Personne personne = personneService.updatePersonne(id, personneRequest);
 

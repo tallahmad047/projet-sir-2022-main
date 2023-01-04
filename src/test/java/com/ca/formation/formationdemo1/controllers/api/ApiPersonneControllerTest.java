@@ -32,6 +32,7 @@ class ApiPersonneControllerTest {
 
     @Autowired
     private TestRestTemplate restTemplate;
+   private String token;
 
     @LocalServerPort
     private int port;
@@ -42,8 +43,7 @@ class ApiPersonneControllerTest {
 
     private String tokenRequest;
 
-    void ApiPersonControllerTest() {
-    }
+
 
 
     @Test
@@ -74,7 +74,7 @@ class ApiPersonneControllerTest {
 
         System.out.println(contentAsString);
         assertNotNull(contentAsString);
-        Assert.assertEquals(contentAsString, "Bye bye");
+        Assert.assertEquals("Bye bye" ,contentAsString);
     }
 
     @Test
@@ -130,7 +130,7 @@ class ApiPersonneControllerTest {
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
+        token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
         tokenRequest = token;
         System.out.println(body);
     }

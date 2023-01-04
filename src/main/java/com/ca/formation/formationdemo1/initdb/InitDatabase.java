@@ -1,4 +1,4 @@
-package com.ca.formation.formationdemo1.initDb;
+package com.ca.formation.formationdemo1.initdb;
 
 import com.ca.formation.formationdemo1.models.Role;
 import com.ca.formation.formationdemo1.models.Utilisateur;
@@ -12,7 +12,7 @@ import java.util.Set;
 @Component
 public class InitDatabase implements ApplicationListener<ApplicationReadyEvent> {
 
-  private UtilisateurService utilisateurService;
+  private final UtilisateurService utilisateurService;
 
   public InitDatabase(UtilisateurService utilisateurService) {
     this.utilisateurService = utilisateurService;

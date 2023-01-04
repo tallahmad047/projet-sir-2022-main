@@ -1,8 +1,8 @@
 package com.ca.formation.formationdemo1.services.impl;
 
-import com.ca.formation.formationdemo1.dto.PersonneDto;
+
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
-import com.ca.formation.formationdemo1.mappers.PersonneMapper;
+
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
 import com.ca.formation.formationdemo1.services.PersonneService;
@@ -16,17 +16,17 @@ import java.util.Optional;
 @Transactional
 
 public class PersonneServiceImpl implements PersonneService {
-    private final PersonneMapper dtoMapper;
+
 
     private final PersonneRepository personneRepository;
 
-    public PersonneServiceImpl(PersonneMapper dtoMapper, PersonneRepository personneRepository) {
-        this.dtoMapper = dtoMapper;
+    public PersonneServiceImpl( PersonneRepository personneRepository) {
+
         this.personneRepository = personneRepository;
     }
 
     @Override
-    public List<Personne> getPersonnes() {
+    public List getPersonnes() {
         return (List) personneRepository.findAll();
     }
 

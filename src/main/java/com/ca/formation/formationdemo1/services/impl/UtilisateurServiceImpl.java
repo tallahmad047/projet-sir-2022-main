@@ -50,8 +50,7 @@ public class UtilisateurServiceImpl implements UtilisateurService {
         Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(utilisateurRequest.getUsername(), utilisateurRequest.getPassword()));
 
-        Utilisateur utilisateur = (Utilisateur) authentication.getPrincipal();
-
-        return utilisateur;
+        return (Utilisateur) authentication.getPrincipal();
     }
+
 }
