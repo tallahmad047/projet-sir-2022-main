@@ -1,6 +1,7 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
 
+import com.ca.formation.formationdemo1.dto.PersonneDto;
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.models.Role;
@@ -66,7 +67,7 @@ public class ApiPersonneController {
         return ResponseEntity.ok().body(personneResponse);
     }
 
-    @PatchMapping("/{id}")
+    /*@PatchMapping("/{id}")
     public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id,
                                                    @RequestBody Personne personneRequest )
             throws ResourceNotFoundException {
@@ -74,7 +75,28 @@ public class ApiPersonneController {
         Personne personne = personneService.updatePersonne(id, personneRequest);
 
         return ResponseEntity.ok().body(personne);
+    }*/
+    @PatchMapping("/{id}")
+    public ResponseEntity<PersonneDto> updatePerson(@PathVariable(value="id") Long id,
+                                                        @RequestBody PersonneDto personRequest )
+            throws ResourceNotFoundException {
+
+        Personne person = personneService.getPersonne(id);
+        // Mapper les champs du DTO sur l'entité persistante
+        person.setNom(personRequest.getNom());
+        person.setAge(personRequest.getAge());
+        person.setPrenom(personRequest.getPrenom());
+        person.setId(personRequest.getId());
+        // Enregistrer les modifications en base de données
+        person = personneService.addPersonne(person);
+        // Mapper l'entité persistante modifiée sur un DTO à renvoyer dans la réponse
+        PersonneDto personResponse = new PersonneDto();
+        personResponse.setId(person.getId());
+        personResponse.setNom(person.getNom());
+        personResponse.setPrenom(person.getPrenom());
+        return ResponseEntity.ok().body(personResponse);
     }
+
 
     @DeleteMapping("/{id}")
     public String deletePersonne(@PathVariable(value="id") Long id){
