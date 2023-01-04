@@ -1,4 +1,4 @@
-package com.ca.formation.formationdemo1.models;
+package com.ca.formation.formationdemo1.dto;
 
 import javax.persistence.*;
 
