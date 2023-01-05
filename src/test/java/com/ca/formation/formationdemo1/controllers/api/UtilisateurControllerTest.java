@@ -2,6 +2,7 @@ package com.ca.formation.formationdemo1.controllers.api;
 
 
 import com.ca.formation.formationdemo1.config.jwtconfig.JwtUtil;
+import com.ca.formation.formationdemo1.dto.UtilisateurDto;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
 
@@ -83,7 +84,7 @@ public class UtilisateurControllerTest {
     @Test
     @DisplayName("Should return a status code of 200 when the user is created")
    public void registrationWhenUserIsCreatedThenReturnStatusCode200() throws javax.xml.bind.ValidationException {
-        Utilisateur utilisateur = new Utilisateur();
+        UtilisateurDto utilisateur = new UtilisateurDto();
         utilisateur.setUsername("test");
         utilisateur.setPassword("test");
 
@@ -99,7 +100,7 @@ public class UtilisateurControllerTest {
     @Test
     @DisplayName("Should return 401 when the credentials are incorrect")
     public  void loginWhenCredentialsAreIncorrectThenReturn401() {
-        Utilisateur utilisateurRequest = new Utilisateur("admin", "admin");
+        UtilisateurDto utilisateurRequest = new UtilisateurDto("admin", "admin");
         when(utilisateurService.login(any(Utilisateur.class)))
                 .thenThrow(new BadCredentialsException("Bad credentials"));
 
@@ -113,15 +114,21 @@ public class UtilisateurControllerTest {
     @DisplayName("Should return 200 when the credentials are correct")
     public  void loginWhenCredentialsAreCorrectThenReturn200() {
         Utilisateur utilisateur = new Utilisateur("admin", "admin");
+        UtilisateurDto utilisateurDto = new UtilisateurDto();
+        utilisateurDto.setUsername(utilisateur.getUsername());
+        utilisateurDto.setPassword(utilisateur.getPassword());
+        utilisateurDto.setName(utilisateur.getName());
+        utilisateurDto.setId(utilisateur.getId());
         when(utilisateurService.login(any(Utilisateur.class))).thenReturn(utilisateur);
         when(jwtUtil.generateAccesToken(any(Utilisateur.class))).thenReturn("token");
         when(jwtUtil.refreshAccesToken(any(Utilisateur.class))).thenReturn("refresh_token");
 
 
-        ResponseEntity<Utilisateur> responseEntity = utilisateurController.login(utilisateur);
+        ResponseEntity<Utilisateur> responseEntity = utilisateurController.login(utilisateurDto);
 
         assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
         assertNotNull(responseEntity.getHeaders().get(HttpHeaders.AUTHORIZATION));
         assertNotNull(responseEntity.getHeaders().get("refresh_token"));
     }
+
 }

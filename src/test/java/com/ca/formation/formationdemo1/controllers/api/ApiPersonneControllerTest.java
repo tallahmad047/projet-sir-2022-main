@@ -162,4 +162,18 @@ class ApiPersonneControllerTest {
         System.out.println(contentAsString);
         assertNotNull(contentAsString);
     }
+
+    @Test
+    @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "READ" })
+    void deletePerson() throws Exception {
+        // TODO : add test deletePerson
+        when(personneService.getPersonne(3L)).thenReturn(null);
+        mockMvc.perform(MockMvcRequestBuilders
+                        .delete("/api/v2/personnes/3")
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+        assertNotNull(status().isOk());
+    }
+
+
 }

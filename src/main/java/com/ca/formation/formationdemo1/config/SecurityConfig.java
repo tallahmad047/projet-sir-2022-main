@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 
 import javax.servlet.http.HttpServletResponse;
@@ -35,11 +36,7 @@ import static java.lang.String.format;
         prePostEnabled = true
 )
 
-
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-
-
-    Logger logger = LoggerFactory.getLogger(SecurityConfig.class);
 
     private final UtilisateurRepository utilisateurRepository;
     private final JwtFilter jwtFilter;
@@ -48,6 +45,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private String apiDocPath;
     @Value("${springdoc.swagger-ui.path}")
     private String swaggerPath;
+    Logger logger= LoggerFactory.getLogger( SecurityConfig.class);
 
     public SecurityConfig(UtilisateurRepository utilisateurRepository, JwtFilter jwtFilter) {
         super();
@@ -56,7 +54,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         this.jwtFilter = jwtFilter;
         SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
     }
-    @Override
+
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.userDetailsService(username -> utilisateurRepository
@@ -74,22 +72,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         // activer les cors et desactiver les CSRF
         http = http.cors().and().csrf().disable();
 
+        // http.csrf().disable(); // Complian
+
         // Mettre la getion de la session a un sans etat
         http = http
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and();
+                .and()
+        ;
 
         // mettre pas autoriser si on a une exception
         http = http
                 .exceptionHandling()
-                        .authenticationEntryPoint(
-                                ((request, response, authException) -> {
-                                    logger.info("Demande pas autoriser - "+authException.getMessage());
-                                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
-                                })
-                        )
-                                .and();
+                .authenticationEntryPoint(
+                        ((request, response, authException) -> {
+                            logger.info("Demande pas autoriser - "+authException.getMessage());
+                            response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
+                        })
+                )
+                .and();
 
         // mettre les permissions sur nos resources
         http.authorizeHttpRequests()
@@ -113,7 +114,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     // Exposer le bean du authentication manager
     @Bean
-    @Override
     public AuthenticationManager authenticationManagerBean() throws Exception{
         return super.authenticationManagerBean();
     }

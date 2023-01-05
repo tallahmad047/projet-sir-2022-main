@@ -93,6 +93,15 @@ class JwtUtilTest {
 
 
     @Test
+    @DisplayName("Should return false when the token is expired")
+    void validateWhenTokenIsExpiredThenReturnFalse() {
+        String token =
+                "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImZvcm1hdGlvbi5jYSIsImlhdCI6MTU4NjY0MjQwMCwiZXhwIjoxNTg2NjQ2MDAwfQ.X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3";
+        assertFalse(jwtUtil.validate(token));}
+
+
+
+    @Test
     @DisplayName("Should throw an exception when the user is invalid")
     void generateAccesTokenWhenUserIsInvalidThenThrowException() {
         String token =

@@ -10,10 +10,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 
+
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-
-
-
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -21,12 +19,12 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class SecurityConfigTest {
 
-    @Mock
-    private UtilisateurRepository utilisateurRepository;
+
     @Mock
     private AuthenticationManagerBuilder auth;
     @InjectMocks
     private SecurityConfig securityConfig;
+
 
 
 
@@ -43,6 +41,8 @@ class SecurityConfigTest {
         securityConfig.configure(auth);
         verify(auth, times(1)).userDetailsService(any());
     }
+
+
 
 
 

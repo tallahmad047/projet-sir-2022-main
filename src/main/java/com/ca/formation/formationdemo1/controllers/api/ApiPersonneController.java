@@ -62,20 +62,17 @@ public class ApiPersonneController {
     }
 
     @PostMapping
-    public ResponseEntity<Personne> addPersonne(@RequestBody Personne personne){
-        Personne personneResponse = personneService.addPersonne(personne);
+    public ResponseEntity<Personne> addPersonne(@RequestBody PersonneDto personneDto){
+        Personne person = new Personne();
+        person.setNom(personneDto.getNom());
+        person.setAge(personneDto.getAge());
+        person.setPrenom(personneDto.getPrenom());
+        person.setId(personneDto.getId());
+        Personne personneResponse = personneService.addPersonne(person);
         return ResponseEntity.ok().body(personneResponse);
     }
 
-    /*@PatchMapping("/{id}")
-    public ResponseEntity<Personne> updatePersonne(@PathVariable(value="id") Long id,
-                                                   @RequestBody Personne personneRequest )
-            throws ResourceNotFoundException {
 
-        Personne personne = personneService.updatePersonne(id, personneRequest);
-
-        return ResponseEntity.ok().body(personne);
-    }*/
     @PatchMapping("/{id}")
     public ResponseEntity<PersonneDto> updatePerson(@PathVariable(value="id") Long id,
                                                         @RequestBody PersonneDto personRequest )

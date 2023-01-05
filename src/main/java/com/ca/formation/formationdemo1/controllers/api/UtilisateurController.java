@@ -2,6 +2,7 @@ package com.ca.formation.formationdemo1.controllers.api;
 
 
 import com.ca.formation.formationdemo1.config.jwtconfig.*;
+import com.ca.formation.formationdemo1.dto.UtilisateurDto;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
 import org.springframework.http.HttpHeaders;
@@ -26,9 +27,14 @@ public class UtilisateurController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<Utilisateur> login(@RequestBody Utilisateur utilisateurRequest){
+    public ResponseEntity<Utilisateur> login(@RequestBody UtilisateurDto utilisateurRequest){
+        Utilisateur utilisateur = new Utilisateur();
+        utilisateur.setPassword(utilisateurRequest.getPassword());
+        utilisateur.setId(utilisateurRequest.getId());
+        utilisateur.setName(utilisateurRequest.getName());
+        utilisateur.setUsername(utilisateurRequest.getUsername());
         try{
-            Utilisateur utilisateur = utilisateurService.login(utilisateurRequest);
+            utilisateur = utilisateurService.login(utilisateur);
 
             return ResponseEntity.ok()
                     .header(HttpHeaders.AUTHORIZATION, jwtUtil.generateAccesToken(utilisateur))
@@ -41,7 +47,7 @@ public class UtilisateurController {
     }
 
     @PostMapping("/registration")
-    public ResponseEntity<Utilisateur> registration(@RequestBody Utilisateur utilisateurRequest){
+    public ResponseEntity<Utilisateur> registration(@RequestBody UtilisateurDto  utilisateurRequest){
 
         return ResponseEntity.status(HttpStatus.OK).build();
     }

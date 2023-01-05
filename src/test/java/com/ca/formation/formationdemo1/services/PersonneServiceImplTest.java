@@ -1,6 +1,7 @@
 package com.ca.formation.formationdemo1.services;
 
 import com.ca.formation.formationdemo1.dto.PersonneDto;
+import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
@@ -18,6 +19,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -152,5 +154,70 @@ public class PersonneServiceImplTest {
 
 
     }
-  // TODO: ajouter les autres tests sur methodes
+
+
+
+    //Test de la méthode getPersonne
+    @Test
+    public void getPersonne() throws ResourceNotFoundException {
+        Personne personne = new Personne("tonux", "samb",50);
+        when(personneRepository.findById(1L)).thenReturn(Optional.of(personne));
+
+        Personne personneResponse = personneServiceImpl.getPersonne(1L);
+
+        assertNotNull(personneResponse);
+        assertEquals(personne.getNom(), personneResponse.getNom());
+        assertEquals(personne.getPrenom(), personneResponse.getPrenom());
+        assertEquals(personne.getAge(), personneResponse.getAge());
+    }
+    //Test de la méthode updatepersone
+    @Test
+    public void updatePersonne() throws ResourceNotFoundException {
+        Personne personne = new Personne("tonux", "samb", 50);
+        personne.setId(1L);
+        when(personneRepository.findById(anyLong())).thenReturn(Optional.of(personne));
+        when(personneRepository.save(any())).thenReturn(personne);
+
+        Personne personneResponse = personneServiceImpl.updatePersonne(1L, new Personne("tonux", "samb", 55));
+
+        assertNotNull(personneResponse);
+        assertEquals(1L, personneResponse.getId().longValue());
+        assertEquals(55, personneResponse.getAge());
+
+        verify(personneRepository, atLeastOnce()).findById(anyLong());
+        verify(personneRepository, atLeastOnce()).save(any());
+    }
+
+    //Test de la méthode getPersonnes
+
+    @Test
+    public void getAllPersonnes() {
+        // Création de la liste de personnes attendue
+        List<Personne> personnes = Arrays.asList(
+                new Personne("tonux", "samb", 50),
+                new Personne("thioune", "serignecheikh", 23),
+                new Personne("niang", "ndeyekhady", 23),
+                new Personne("sow", "fatou", 26),
+                new Personne("seye", "madjiguen", 24)
+        );
+
+        // Configuration du comportement du mock du repository de personne
+        when(personneRepository.findAll()).thenReturn(personnes);
+
+// Appel de la méthode à tester
+        List<Personne> personnesResponse = personneServiceImpl.getPersonnes();
+
+        // Vérification du résultat
+        assertNotNull(personnesResponse);
+        assertEquals(personnes, personnesResponse);
+    }
+
+
+
+
+
+
+    // Test de la méthode registration
+
+
 }

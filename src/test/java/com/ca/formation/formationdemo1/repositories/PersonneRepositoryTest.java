@@ -108,4 +108,25 @@ public class PersonneRepositoryTest {
 
 
 
+    @Test
+    public void DeleteById() {
+        Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
+        personneRepository.delete(personne);
+        assertNotNull(personneRepository.findById(personne.getId()));
+    }
+
+
+
+
+    @Test
+    public  void ageGreaterThan()
+    {
+        Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
+        List<Personne> p=personneRepository.ageGreaterThan(personne.getAge());
+        assertNotNull(p);
+    }
+
+
+
+
 }

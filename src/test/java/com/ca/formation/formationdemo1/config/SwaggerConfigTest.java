@@ -56,4 +56,5 @@ class SwaggerConfigTest {
     void publicApiShouldReturnGroupedOpenApi() {
         assertNotNull(swaggerConfig.publicApi());
     }
+
 }

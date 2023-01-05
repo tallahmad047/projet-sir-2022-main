@@ -32,10 +32,16 @@ public class PersonneController {
     }
 
     @PostMapping("/ajouterPersonne")
-    public String ajouterPersonne(Personne personne, Model model){
-        repository.save(personne);
+    public String ajouterPersonne(PersonneDto personDTO, Model model){
+        Personne person = new Personne();
+        // Mapper les champs du DTO sur l'entité persistante
+        person.setNom(personDTO.getNom());
+        person.setAge(personDTO.getAge());
+        person.setPrenom(personDTO.getPrenom());
+        person.setId(personDTO.getId());
+        // Enregistrer l'entité en base de données
+        repository.save(person);
         return "redirect:/";
-
     }
 
 
