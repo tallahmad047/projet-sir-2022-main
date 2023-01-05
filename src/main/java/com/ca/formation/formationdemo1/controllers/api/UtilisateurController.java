@@ -30,7 +30,7 @@ public class UtilisateurController {
     public ResponseEntity<Utilisateur> login(@RequestBody UtilisateurDto utilisateurRequest){
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setPassword(utilisateurRequest.getPassword());
-        utilisateur.setId(utilisateurRequest.getId());
+
         utilisateur.setName(utilisateurRequest.getName());
         utilisateur.setUsername(utilisateurRequest.getUsername());
         try{

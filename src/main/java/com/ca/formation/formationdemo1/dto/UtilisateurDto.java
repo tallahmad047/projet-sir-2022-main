@@ -5,7 +5,6 @@ package com.ca.formation.formationdemo1.dto;
 public class UtilisateurDto  {
 
 
-    private Long id;
 
     private boolean enabled = true;
     private String username;
@@ -31,13 +30,7 @@ public class UtilisateurDto  {
 
     }
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public boolean isEnabled() {
 

@@ -38,7 +38,7 @@ public class PersonneController {
         person.setNom(personDTO.getNom());
         person.setAge(personDTO.getAge());
         person.setPrenom(personDTO.getPrenom());
-        person.setId(personDTO.getId());
+
         // Enregistrer l'entité en base de données
         repository.save(person);
         return "redirect:/";

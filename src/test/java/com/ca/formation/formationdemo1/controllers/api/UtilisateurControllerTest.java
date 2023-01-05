@@ -127,7 +127,7 @@ public class UtilisateurControllerTest {
         utilisateurDto.setUsername(utilisateur.getUsername());
         utilisateurDto.setPassword(utilisateur.getPassword());
         utilisateurDto.setName(utilisateur.getName());
-        utilisateurDto.setId(utilisateur.getId());
+
         when(utilisateurService.login(any(Utilisateur.class))).thenReturn(utilisateur);
         when(jwtUtil.generateAccesToken(any(Utilisateur.class))).thenReturn("token");
         when(jwtUtil.refreshAccesToken(any(Utilisateur.class))).thenReturn("refresh_token");

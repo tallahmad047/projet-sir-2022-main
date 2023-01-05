@@ -1,6 +1,7 @@
 package com.ca.formation.formationdemo1.repositories;
 
 import com.ca.formation.formationdemo1.models.Personne;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,9 +13,9 @@ import org.springframework.test.context.junit4.SpringRunner;
 import java.util.List;
 import java.util.Optional;
 
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -124,6 +125,49 @@ public class PersonneRepositoryTest {
         Personne personne = personneRepository.save(new Personne("tonux", "samb", 50));
         List<Personne> p=personneRepository.ageGreaterThan(personne.getAge());
         assertNotNull(p);
+    }
+
+
+
+
+    // TODO: ajouter un test sur les autres methodes comme delete, findByNom, etc...
+
+
+    @Test
+    public void findbyNom(){
+
+        List<Personne> person = personneRepository.findByNom("Abdel");
+        assertNotNull(person);
+        assertNotEquals(0, person.size());
+    }
+
+    // TODO : add test findAll
+    @Test
+    public void findbyid(){
+        //Given
+        Personne pers = personneRepository.save(new Personne("seck", "baye", 24));
+        //When
+        Optional<Personne> person = personneRepository.findById(pers.getId());
+        //Then
+        assertNotNull(person);
+        assertEquals("seck", person.get().getNom());
+    }
+
+
+    @Test
+    public void deletePerson(){
+        Personne person  =  personneRepository.save(new Personne("baye","seck",24));
+        //Personne person = personneRepository.findById(1L).get();
+        personneRepository.delete(personneRepository.findById(person.getId()).get());
+
+        Personne person1 = null;
+
+        Optional<Personne> person2 = personneRepository.findById(person.getId());
+
+        if (person2.isPresent()){
+            person1 = person2.get();
+        }
+        Assertions.assertThat(person1).isNull();
     }
 
 

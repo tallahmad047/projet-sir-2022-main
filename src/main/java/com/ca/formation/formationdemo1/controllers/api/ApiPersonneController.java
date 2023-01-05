@@ -67,7 +67,7 @@ public class ApiPersonneController {
         person.setNom(personneDto.getNom());
         person.setAge(personneDto.getAge());
         person.setPrenom(personneDto.getPrenom());
-        person.setId(personneDto.getId());
+
         Personne personneResponse = personneService.addPersonne(person);
         return ResponseEntity.ok().body(personneResponse);
     }
@@ -83,12 +83,12 @@ public class ApiPersonneController {
         person.setNom(personRequest.getNom());
         person.setAge(personRequest.getAge());
         person.setPrenom(personRequest.getPrenom());
-        person.setId(personRequest.getId());
+
         // Enregistrer les modifications en base de données
         person = personneService.addPersonne(person);
         // Mapper l'entité persistante modifiée sur un DTO à renvoyer dans la réponse
         PersonneDto personResponse = new PersonneDto();
-        personResponse.setId(person.getId());
+
         personResponse.setNom(person.getNom());
         personResponse.setPrenom(person.getPrenom());
         return ResponseEntity.ok().body(personResponse);

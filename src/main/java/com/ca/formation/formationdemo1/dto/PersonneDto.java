@@ -6,7 +6,6 @@ package com.ca.formation.formationdemo1.dto;
 public class PersonneDto {
 
 
-    private Long id;
 
 
     private String nom;
@@ -26,13 +25,6 @@ public class PersonneDto {
         this.age = age;
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public int getAge() {
         return age;
