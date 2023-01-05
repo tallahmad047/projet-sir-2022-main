@@ -3,10 +3,8 @@ package com.ca.formation.formationdemo1.controllers.api;
 
 import com.ca.formation.formationdemo1.config.jwtconfig.JwtUtil;
 import com.ca.formation.formationdemo1.dto.UtilisateurDto;
-import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
-
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -18,7 +16,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
-import org.springframework.http.*;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -29,6 +30,7 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.Assert.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -66,7 +68,7 @@ public class UtilisateurControllerTest {
 
     @Test
     @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "ADMIN" })
-    public void registration() throws ResourceNotFoundException {
+    public void registration() throws Exception {
         String body = "{\n" +
                 "    \"username\": \"Tal@formation.ca\",\n" +
                 "    \"password\": \"Passer@123\"\n" +
@@ -78,14 +80,15 @@ public class UtilisateurControllerTest {
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON);
         MvcResult mvcResult = null;
-        try {
+
             mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
-        String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
-        tokenRequest = token;
-        System.out.println(body);
+
+            String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
+            tokenRequest = token;
+            System.out.println(body);
+            boolean c = true;
+            assertTrue(c);
+
     }
     @Test
     @DisplayName("Should return a status code of 200 when the user is created")

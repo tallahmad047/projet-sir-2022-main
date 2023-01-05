@@ -48,7 +48,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     Logger logger= LoggerFactory.getLogger( SecurityConfig.class);
 
     public SecurityConfig(UtilisateurRepository utilisateurRepository, JwtFilter jwtFilter) {
-        super();
 
         this.utilisateurRepository = utilisateurRepository;
         this.jwtFilter = jwtFilter;
@@ -63,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         () -> new UsernameNotFoundException(
                                 format("utilisateur: %s,  pas trouvé", username)
                         )
-                ));
+                )).passwordEncoder(new BCryptPasswordEncoder());;
     }
 
     @Override
@@ -86,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(
                         ((request, response, authException) -> {
-                            logger.info("Demande pas autoriser - "+authException.getMessage());
+                            logger.info("Demande pas autoriser - { } ",authException.getMessage());
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                         })
                 )

@@ -40,12 +40,12 @@ public class PersonneServiceImpl implements PersonneService {
         }
         Personne personne = personneRepository.findById(id).orElseThrow(() ->
                 new ResourceNotFoundException("Personne not found with id: " + id));
-        //todo verifier si l'id est le même que celui qui est dans personne
+
         if (!id.equals(personne.getId())) {
             throw new ResourceNotFoundException("Id in path and object do not match");
         }
 
-        //todo setter les valeur qui doivent etre mise à jour
+
 
         personne.setAge(personneRequest.getAge());
         personne.setPrenom(personneRequest.getPrenom());
