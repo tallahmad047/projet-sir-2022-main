@@ -2,7 +2,6 @@ package com.ca.formation.formationdemo1.services.impl;
 
 
 import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
-
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.repositories.PersonneRepository;
 import com.ca.formation.formationdemo1.services.PersonneService;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -37,15 +35,16 @@ public class PersonneServiceImpl implements PersonneService {
 
     @Override
     public Personne updatePersonne(Long id, Personne personneRequest) throws ResourceNotFoundException  {
-        Optional<Personne> optionalPersonne = personneRepository.findById(id);
-        if(optionalPersonne.isEmpty()){
-            throw new ResourceNotFoundException("Mise à jour impossible ");
+        if (personneRequest == null) {
+            throw new IllegalArgumentException("Personne request cannot be null");
         }
-        Personne personne = optionalPersonne.get();
+        Personne personne = personneRepository.findById(id).orElseThrow(() ->
+                new ResourceNotFoundException("Personne not found with id: " + id));
         //todo verifier si l'id est le même que celui qui est dans personne
-        if (personne.getId() != id) {
+        if (!id.equals(personne.getId())) {
             throw new ResourceNotFoundException("Id in path and object do not match");
         }
+
         //todo setter les valeur qui doivent etre mise à jour
 
         personne.setAge(personneRequest.getAge());
