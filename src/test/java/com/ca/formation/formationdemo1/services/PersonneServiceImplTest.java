@@ -272,8 +272,8 @@ public class PersonneServiceImplTest {
 
     @Test
     public void getPersonneParNomAndPrenom() {
-        String nom="seck";
-        String prenom="baye";
+        String nom="tall";
+        String prenom="ahmad";
         //Given
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
@@ -289,19 +289,19 @@ public class PersonneServiceImplTest {
 
     @Test
     public void getPersonneNomAndPrenom() {
-        String nom="seck";
-        String prenom="baye";
+        String nom="tall";
+        String prenom="ahmad";
         //Given
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
         list.add(new Personne("tonux","mbacke",23));
-        list.add(new Personne("seck","baye",24));
+        list.add(new Personne("tall","ahmad",24));
         when(personneRepository.findAll()).thenReturn(list);
         //When
         List<Personne> personList = personneServiceImpl.getPersonneNomAndPrenom("tonux","samb");
         //Then
         assertEquals(0, personList.size());
-        verify(personneRepository, atLeastOnce()).findNomPrenom("tonux","samb");
+        verify(personneRepository, atLeastOnce()).findByNomAndPrenom("tonux","samb");
     }
 
     @Test
@@ -326,8 +326,8 @@ public class PersonneServiceImplTest {
         //Given
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
-        list.add(new Personne("tonux","mbacke",23));
-        list.add(new Personne("seck","baye",24));
+        list.add(new Personne("tonux","tall",23));
+        list.add(new Personne("penda","baye",24));
         when(personneRepository.findAll()).thenReturn(list);
         //When
         List<Personne> personList = personneServiceImpl.ageGreaterThan(40);
