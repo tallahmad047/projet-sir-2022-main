@@ -3,6 +3,7 @@ package com.ca.formation.formationdemo1.controllers.api;
 
 import com.ca.formation.formationdemo1.config.jwtconfig.JwtUtil;
 import com.ca.formation.formationdemo1.dto.UtilisateurDto;
+import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Utilisateur;
 import com.ca.formation.formationdemo1.services.UtilisateurService;
 
@@ -65,7 +66,7 @@ public class UtilisateurControllerTest {
 
     @Test
     @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "ADMIN" })
-    public void registration() throws Exception {
+    public void registration() throws ResourceNotFoundException {
         String body = "{\n" +
                 "    \"username\": \"Tal@formation.ca\",\n" +
                 "    \"password\": \"Passer@123\"\n" +
@@ -76,7 +77,12 @@ public class UtilisateurControllerTest {
                 .post("/api/v2/auth/registration")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MvcResult mvcResult = null;
+        try {
+            mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
         tokenRequest = token;
         System.out.println(body);

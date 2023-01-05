@@ -1,5 +1,6 @@
 package com.ca.formation.formationdemo1.controllers;
 
+import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.services.PersonneService;
 
@@ -154,9 +155,10 @@ public class PersonneControllerTest {
     tokenRequest = token;
   }
 
+
   @Test
   @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "ADMIN" })
-  public void registration() throws Exception {
+  public void registration() throws ResourceNotFoundException {
     String body = "{\n" +
             "    \"username\": \"Tal@formation.ca\",\n" +
             "    \"password\": \"Passer@123\"\n" +
@@ -167,10 +169,14 @@ public class PersonneControllerTest {
             .post("/api/v2/auth/registration")
             .content(body)
             .contentType(MediaType.APPLICATION_JSON);
-    MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+    MvcResult mvcResult = null;
+    try {
+      mvcResult = mockMvc.perform(requestBuilder).andReturn();
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
     String token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
     tokenRequest = token;
     System.out.println(body);
   }
-
 }

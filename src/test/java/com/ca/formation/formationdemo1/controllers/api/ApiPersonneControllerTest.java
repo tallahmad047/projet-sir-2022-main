@@ -1,5 +1,6 @@
 package com.ca.formation.formationdemo1.controllers.api;
 
+import com.ca.formation.formationdemo1.exception.ResourceNotFoundException;
 import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.services.PersonneService;
 import org.junit.Assert;
@@ -86,7 +87,7 @@ class ApiPersonneControllerTest {
     @Test
 
     @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "ADMIN" })
-    void updatePersonne() throws Exception {
+    void updatePersonne() throws ResourceNotFoundException {
         String body = "{\n" +
                 "    \"nom\": \"ahmad\",\n" +
 
@@ -95,7 +96,12 @@ class ApiPersonneControllerTest {
                 .patch(getRootUrl()+"/3")
                 .content(body)
                 .contentType(MediaType.APPLICATION_JSON);
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        MvcResult mvcResult = null;
+        try {
+            mvcResult = mockMvc.perform(requestBuilder).andReturn();
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         token = mvcResult.getResponse().getHeader(HttpHeaders.AUTHORIZATION);
         tokenRequest = token;
         System.out.println(body);
