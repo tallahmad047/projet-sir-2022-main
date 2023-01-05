@@ -4,6 +4,8 @@ import com.ca.formation.formationdemo1.models.Personne;
 import com.ca.formation.formationdemo1.services.PersonneService;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +21,9 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
@@ -46,20 +50,7 @@ class ApiPersonneControllerTest {
 
 
 
-    @Test
-    @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "READ" })
-    void hello() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/api/v2/personnes/hello")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenRequest)
-                .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        String contentAsString = mvcResult.getResponse().getContentAsString();
-
-        System.out.println(contentAsString);
-        assertNotNull(contentAsString);
-    }
 
     @Test
     @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "ADMIN" })
@@ -77,34 +68,9 @@ class ApiPersonneControllerTest {
         Assert.assertEquals("Bye bye" ,contentAsString);
     }
 
-    @Test
-    void getToutPersonne() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/api/v2/personnes")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenRequest)
-                .contentType(MediaType.APPLICATION_JSON);
 
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        String contentAsString = mvcResult.getResponse().getContentAsString();
 
-        System.out.println(contentAsString);
-        assertNotNull(contentAsString);
-    }
 
-    @Test
-    @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "READ" })
-    void getPersonne() throws Exception {
-        RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/api/v2/personnes/2")
-                .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenRequest)
-                .contentType(MediaType.APPLICATION_JSON);
-
-        MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
-        String contentAsString = mvcResult.getResponse().getContentAsString();
-
-        System.out.println(contentAsString);
-        assertNotNull(contentAsString);
-    }
 
     @Test
     void addPersonne() {
@@ -147,14 +113,21 @@ class ApiPersonneControllerTest {
                 .andExpect(status().isOk());
 
     }
-
-    @Test
-    @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "READ" })
-    void getPersonneParNom() throws Exception {
+//on a fusionner les 4 test helle ,getpersonne,getparNom et getToutPersonn
+    @ParameterizedTest
+    @CsvSource({
+            "/api/v2/personnes/hello, GET, michel@formation.sn, Passer@123, READ",
+            "/api/v2/personnes, GET, michel@formation.sn, Passer@123, READ",
+            "/api/v2/personnes/2, GET, michel@formation.sn, Passer@123, READ",
+            "/api/v2/personnes/search/Abdel, GET, michel@formation.sn, Passer@123, READ"
+    })
+    void apiTest(String url, String method, String username, String password, String authority) 
+            throws Exception {
         RequestBuilder requestBuilder = MockMvcRequestBuilders
-                .get("/api/v2/personnes/search/Abdel")
+                .get(url)
                 .header(HttpHeaders.AUTHORIZATION, "Bearer " + tokenRequest)
-                .contentType(MediaType.APPLICATION_JSON);
+                .contentType(MediaType.APPLICATION_JSON)
+                .with(user(username).password(password).roles(authority));
 
         MvcResult mvcResult = mockMvc.perform(requestBuilder).andReturn();
         String contentAsString = mvcResult.getResponse().getContentAsString();
@@ -162,6 +135,7 @@ class ApiPersonneControllerTest {
         System.out.println(contentAsString);
         assertNotNull(contentAsString);
     }
+
 
     @Test
     @WithMockUser(username = "michel@formation.sn", password = "Passer@123", authorities = { "READ" })

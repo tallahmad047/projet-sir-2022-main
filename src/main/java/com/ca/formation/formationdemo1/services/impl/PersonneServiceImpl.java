@@ -43,8 +43,14 @@ public class PersonneServiceImpl implements PersonneService {
         }
         Personne personne = optionalPersonne.get();
         //todo verifier si l'id est le même que celui qui est dans personne
+        if (personne.getId() != id) {
+            throw new ResourceNotFoundException("Id in path and object do not match");
+        }
         //todo setter les valeur qui doivent etre mise à jour
+
         personne.setAge(personneRequest.getAge());
+        personne.setPrenom(personneRequest.getPrenom());
+        personne.setNom(personneRequest.getNom());
         return personneRepository.save(personne);
     }
 

@@ -1,15 +1,6 @@
 package com.ca.formation.formationdemo1.dto;
 
 
-import com.ca.formation.formationdemo1.models.Role;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 public class UtilisateurDto  {
 
