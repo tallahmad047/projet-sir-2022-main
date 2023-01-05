@@ -85,7 +85,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(
                         ((request, response, authException) -> {
-                            logger.info("Demande pas autoriser - {0} ",authException.getMessage());
+                            logger.info("Demande pas autoriser -");
+                             logger.info(authException.getMessage());
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                         })
                 )
