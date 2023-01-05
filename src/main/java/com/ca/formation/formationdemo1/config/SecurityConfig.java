@@ -62,7 +62,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         () -> new UsernameNotFoundException(
                                 format("utilisateur: %s,  pas trouvé", username)
                         )
-                )).passwordEncoder(new BCryptPasswordEncoder());;
+                ));
     }
 
     @Override
@@ -85,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling()
                 .authenticationEntryPoint(
                         ((request, response, authException) -> {
-                            logger.info("Demande pas autoriser - { } ",authException.getMessage());
+                            logger.info("Demande pas autoriser - {0} ",authException.getMessage());
                             response.sendError(HttpServletResponse.SC_UNAUTHORIZED, authException.getMessage());
                         })
                 )
