@@ -32,7 +32,7 @@ pipeline{
                stage('Builddocker') {
                           steps {
                               // Build the Docker image
-                              bat 'docker build -t projet-sir:groupe5 .'
+                              bat 'docker build -t ProjetSir2022/projet-sir:groupe5 .'
                           }
                       }
                       stage('Test') {
