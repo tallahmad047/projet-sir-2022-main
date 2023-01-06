@@ -39,7 +39,7 @@ pipeline{
                       stage('Push') {
 
                             steps {
-                              withDockerRegistry([credentialsId: "docker-hub" ,url:"" ]){
+                              withDockerRegistry([credentialsId: "groupe5" ,url:"" ]){
                               bat 'docker push projetsir2022/projet2022:groupe5'
                               }
                             }
