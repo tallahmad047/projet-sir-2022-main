@@ -35,6 +35,13 @@ pipeline{
                               bat 'docker build -t projetsir2022/projet-sir:groupe5  .'
                           }
                       }
+                  stage('docker tag') {
+                           steps {
+                                                     // Build the Docker image
+                             bat 'docker tag projetsir2022/projet-sir:groupe5 projetsir2022/projetsir2022:groupe5'
+                                    }
+                                  }
+
 
                       stage('Push') {
 
