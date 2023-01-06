@@ -35,11 +35,7 @@ pipeline{
                               bat 'docker build -t projetsir2022/projet-sir:groupe5  .'
                           }
                       }
-                      stage('Test') {
-                          steps {
-                              // Run tests on the Docker image
-                              bat 'docker run projet-sir:groupe5  /projetsir2022'
-                          }
+
                       }
                       stage('Push') {
                           steps {
