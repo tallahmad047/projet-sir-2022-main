@@ -29,6 +29,27 @@ pipeline{
                       bat 'echo "Deploying into Server dev."'
                   }
               }
+               stage('Build') {
+                          steps {
+                              // Build the Docker image
+                              bat 'docker build -t projet-sir:groupe5 .'
+                          }
+                      }
+                      stage('Test') {
+                          steps {
+                              // Run tests on the Docker image
+                              bat 'docker run projet-sir:groupe5 pytest'
+                          }
+                      }
+                      stage('Push') {
+                          steps {
+                              // Log in to Docker Hub
+                              bat 'echo "ProjetSir2022" | docker login -u "projetsir2022" '
+                              // Push the image to Docker Hub
+                              bat 'docker push projet-sir:groupe5'
+                          }
+                      }
+
           } // stages
 
           post {
