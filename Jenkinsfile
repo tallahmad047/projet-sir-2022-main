@@ -29,7 +29,7 @@ pipeline{
                       bat 'echo "Deploying into Server dev."'
                   }
               }
-               stage('Build') {
+               stage('Builddocker') {
                           steps {
                               // Build the Docker image
                               bat 'docker build -t projet-sir:groupe5 .'
