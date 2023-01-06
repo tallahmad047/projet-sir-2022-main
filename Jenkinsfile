@@ -38,7 +38,7 @@ pipeline{
                       stage('Test') {
                           steps {
                               // Run tests on the Docker image
-                              bat 'docker run projet-sir:groupe5 pytest /projetsir2022'
+                              bat 'docker run projet-sir:groupe5  /projetsir2022'
                           }
                       }
                       stage('Push') {
