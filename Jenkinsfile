@@ -37,13 +37,13 @@ pipeline{
                       }
 
                       stage('Push') {
-                          steps {
-                              // Log in to Docker Hub
-                              bat 'echo "ProjetSir2022" | docker login -u "projetsir2022" '
-                              // Push the image to Docker Hub
-                              bat 'docker push projet-sir:groupe5 '
+
+                            steps {
+                              withDockerRegistry([credentialsId: "docker-hub" ,url:"" ]){
+                              bat 'docker push projetsir2022/projet2022:groupe5'
+                              }
+                            }
                           }
-                      }
 
           } // stages
 
