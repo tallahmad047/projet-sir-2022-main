@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: projetsir-deployment
+  labels:
+    app: projetsir
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: projetsir
+  template:
+    metadata:
+      labels:
+        app: projetsir
+    spec:
+      containers:
+        - name: projetsir
+          image: projetsir2022/projet2022:groupe5
+          ports:
+            - containerPort: 8080
+
+
+
+
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: my-service
+spec:
+  selector:
+    name: projetsir-deployment
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
