@@ -35,7 +35,7 @@ pipeline{
                               bat 'docker build -t projetsir2022/projet-sir:groupe5  .'
                           }
                       }
-                  stage('docker tag') {
+                  stage('dockertag') {
                            steps {
                                                      // Build the Docker image
                              bat 'docker tag projetsir2022/projet-sir:groupe5 projetsir2022/projetsir2022:groupe5'
@@ -47,7 +47,7 @@ pipeline{
 
                             steps {
                               withDockerRegistry([credentialsId: "groupe5" ,url:"" ]){
-                              bat 'docker push projetsir2022/projet2022:groupe5'
+                              bat 'docker push projetsir2022/projetsir2022:groupe5'
                               }
                             }
                           }
