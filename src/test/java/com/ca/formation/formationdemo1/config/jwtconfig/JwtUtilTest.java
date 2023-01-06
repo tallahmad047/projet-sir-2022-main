@@ -1,14 +1,13 @@
 package com.ca.formation.formationdemo1.config.jwtconfig;
 
-
-import com.ca.formation.formationdemo1.models.Role;
+import com.ca.formation.formationdemo1.models.*;
 import com.ca.formation.formationdemo1.models.Utilisateur;
-import org.junit.Test;
+import io.jsonwebtoken.SignatureException;
 import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
-import java.security.SignatureException;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -91,14 +90,13 @@ class JwtUtilTest {
     }
 
 
-
     @Test
     @DisplayName("Should return false when the token is expired")
     void validateWhenTokenIsExpiredThenReturnFalse() {
         String token =
                 "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImlzcyI6ImZvcm1hdGlvbi5jYSIsImlhdCI6MTU4NjY0MjQwMCwiZXhwIjoxNTg2NjQ2MDAwfQ.X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3_X-_q-8_7-3";
-        assertFalse(jwtUtil.validate(token));}
-
+        assertFalse(jwtUtil.validate(token));
+    }
 
 
     @Test
@@ -125,5 +123,4 @@ class JwtUtilTest {
 
         assertNotNull(token);
     }
-
 }
