@@ -36,13 +36,12 @@ pipeline{
                           }
                       }
 
-                      }
                       stage('Push') {
                           steps {
                               // Log in to Docker Hub
-                              bat 'echo "ProjetSir2022" | docker login -u "projetsir2022" /projetsir2022'
+                              bat 'echo "ProjetSir2022" | docker login -u "projetsir2022" '
                               // Push the image to Docker Hub
-                              bat 'docker push projet-sir:groupe5 /projetsir2022'
+                              bat 'docker push projet-sir:groupe5 '
                           }
                       }
 
