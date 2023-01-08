@@ -60,7 +60,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .findByUsername(username)
                 .orElseThrow(
                         () -> new UsernameNotFoundException(
-                                format("utilisateur: %s,  pas trouvé", username)
+                                format("utilisateur: %s,  pas trouve", username)
                         )
                 ));
     }
