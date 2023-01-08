@@ -16,7 +16,7 @@ public interface PersonneRepository extends CrudRepository<Personne, Long> {
     @Query(value = "SELECT * FROM personne WHERE lastname= :nom AND firstname= :prenom ", nativeQuery = true)
     List<Personne>  findNomPrenom(String nom, String prenom);
 
-    @Query(value = "SELECT p.prenom FROM Personne p WHERE p.nom= :nom AND p.prenom= :prenom ")
+    @Query(value = "SELECT P.prenom FROM Personne P WHERE P.nom= :nom AND P.prenom= :prenom ")
     List<Personne>  findNomPrenom2(String nom, String prenom);
 
     List<Personne> ageGreaterThan(int age);
