@@ -197,10 +197,10 @@ public class PersonneServiceImplTest {
         // Création de la liste de personnes attendue
         List<Personne> personnes = Arrays.asList(
                 new Personne("tonux", "samb", 50),
-                new Personne("thioune", "serignecheikh", 23),
-                new Personne("niang", "ndeyekhady", 23),
-                new Personne("sow", "fatou", 26),
-                new Personne("seye", "madjiguen", 24)
+                new Personne("mbengue", "modou", 23),
+                new Personne("gadji", "penda", 23),
+                new Personne("sow", "mbacke", 26),
+                new Personne("ahmad", "tall", 24)
         );
 
         // Configuration du comportement du mock du repository de personne
@@ -259,7 +259,7 @@ public class PersonneServiceImplTest {
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
         list.add(new Personne("lahad","mbacke",23));
-        list.add(new Personne("baye","seck",24));
+        list.add(new Personne("penda","gadji",24));
         when(personneRepository.findAll()).thenReturn(list);
         //When
         List<Personne> personList = personneServiceImpl.getPersonnes();
@@ -278,7 +278,7 @@ public class PersonneServiceImplTest {
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
         list.add(new Personne("tonux","mbacke",23));
-        list.add(new Personne("seck","baye",24));
+        list.add(new Personne("gadji","penda",24));
         when(personneRepository.findAll()).thenReturn(list);
         //When
         List<Personne> personList = personneServiceImpl.getPersonneParNomAndPrenom("tonux","samb");
@@ -306,13 +306,13 @@ public class PersonneServiceImplTest {
 
     @Test
     public void getPersonneNomAndPrenom2() {
-        String nom="seck";
-        String prenom="baye";
+        String nom="gadji";
+        String prenom="penda";
         //Given
         List<Personne> list = new ArrayList<Personne>();
         list.add(new Personne("tonux","samb",50));
         list.add(new Personne("tonux","mbacke",23));
-        list.add(new Personne("seck","baye",24));
+        list.add(new Personne("gadji","penda",24));
         when(personneRepository.findAll()).thenReturn(list);
         //When
         List<Personne> personList = personneServiceImpl.getPersonneNomAndPrenom2("tonux","samb");
