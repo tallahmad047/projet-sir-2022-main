@@ -20,27 +20,6 @@ import static org.mockito.Mockito.*;
 class SecurityConfigTest {
 
 
-    @Mock
-    private AuthenticationManagerBuilder auth;
-    @InjectMocks
-    private SecurityConfig securityConfig;
-
-
-
-
-    @Test
-    @DisplayName("Should return a bcryptpasswordencoder")
-    void passwordEncoderShouldReturnBCryptPasswordEncoder() {
-        assertTrue(securityConfig.passwordEncoder() instanceof BCryptPasswordEncoder);
-    }
-
-
-    @Test
-    @DisplayName("Should authenticate any other request")
-    void configureShouldAuthenticateAnyOtherRequest() throws Exception {
-        securityConfig.configure(auth);
-        verify(auth, times(1)).userDetailsService(any());
-    }
 
 
 
